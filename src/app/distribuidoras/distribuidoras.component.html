@@ -1,0 +1,41 @@
+<div class="container">
+  <h2>Distribuidoras</h2>
+
+  <!-- Formulario para agregar nueva -->
+  <div class="form-agregar">
+    <input [(ngModel)]="nuevaDistribuidora.t_distribuidorasnombre"
+           placeholder="Nombre de la distribuidora" />
+    <button (click)="agregarDistribuidora()">Agregar</button>
+  </div>
+
+  <!-- Listado -->
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+
+
+
+    
+      <tr *ngFor="let dis of distribuidoras">
+        <td>{{ dis.t_distribuidorasid }}</td>
+        <td *ngIf="editando?.t_distribuidorasid !== dis.t_distribuidorasid">{{ dis.t_distribuidorasnombre }}</td>
+        <td *ngIf="editando?.t_distribuidorasid === dis.t_distribuidorasid">
+          <input [(ngModel)]="editando!.t_distribuidorasnombre" />
+
+        </td>
+        <td>
+          <button *ngIf="editando?.t_distribuidorasid !== dis.t_distribuidorasid" (click)="editarDistribuidora(dis)">Editar</button>
+          <button *ngIf="editando?.t_distribuidorasid === dis.t_distribuidorasid" (click)="guardarEdicion()">Guardar</button>
+          <button *ngIf="editando?.t_distribuidorasid === dis.t_distribuidorasid" (click)="cancelarEdicion()">Cancelar</button>
+          <button (click)="eliminarDistribuidora(dis.t_distribuidorasid)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
