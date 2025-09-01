@@ -1,0 +1,46 @@
+<div class="container">
+    <h2>Resoluciones</h2>
+
+    <!-- Formulario para agregar nueva -->
+    <div class="form-agregar">
+        <input [(ngModel)]="nuevaResolucion.t_resolucionesyearnumber" placeholder="Nombre de la resolucion" />
+        <button (click)="agregarResolucion()">Agregar</button>
+    </div>
+
+    <!-- Listado -->
+    <div class="table-wrapper">
+        <table border="1" width="100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Resolucion Año</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+
+
+                <tr *ngFor="let res of resoluciones">
+                    <td>{{ res.t_resolucionesyearid }}</td>
+                    <td *ngIf="editando?.t_resolucionesyearid !== res.t_resolucionesyearid">{{ res.t_resolucionesyearnumber }}
+                    </td>
+                    <td *ngIf="editando?.t_resolucionesyearid === res.t_resolucionesyearid">
+                        <input [(ngModel)]="editando!.t_resolucionesyearnumber" />
+
+                    </td>
+                    <td>
+                        <button *ngIf="editando?.t_resolucionesyearid !== res.t_resolucionesyearid"
+                            (click)="editarResolucion(res)">Editar</button>
+                        <button *ngIf="editando?.t_resolucionesyearid === res.t_resolucionesyearid"
+                            (click)="guardarEdicion()">Guardar</button>
+                        <button *ngIf="editando?.t_resolucionesyearid === res.t_resolucionesyearid"
+                            (click)="cancelarEdicion()">Cancelar</button>
+                        <button (click)="eliminarResolucion(res.t_resolucionesyearid!)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

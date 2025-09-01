@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 
 export interface TDistribuidoras {
-  t_distribuidorasid: number;
+  t_distribuidorasid?: number;
   t_distribuidorasnombre: string;
 }
 
