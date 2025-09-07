@@ -1,0 +1,89 @@
+/* Fondo pastel degradé */
+.login-page {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #6a8ae9, #69afd7, #d6f5ff); /* rosa pastel → celeste → verde pastel */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+/* Caja de login */
+.login-container {
+    background: rgba(255, 255, 255, 0.95); /* blanco semi-transparente */
+    padding: 45px 35px;
+    border-radius: 20px;
+    box-shadow: 0px 12px 25px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Título */
+.login-container h2 {
+    margin-bottom: 30px;
+    color: #333;
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: 1px;
+}
+
+/* Inputs */
+.input-group {
+    margin-bottom: 20px;
+}
+
+input {
+    width: 60%;
+    padding: 14px 16px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    outline: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #FFB6C1; /* rosa pastel */
+    box-shadow: 0 0 10px rgba(255, 182, 193, 0.4);
+}
+
+/* Botón */
+button {
+    width: 85%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #4281b1, #1d6b8f);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(90deg, #85c2e1, #3976b4); /* degradé pastel */
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 35px 25px;
+    }
+    
+    input, button {
+        width: 100%;
+    }
+}

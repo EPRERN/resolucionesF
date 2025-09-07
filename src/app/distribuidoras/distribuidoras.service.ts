@@ -18,9 +18,15 @@ private apiUrl = 'http://localhost:8080/api/t_distribuidorass'; // Ajusta el pue
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<TDistribuidoras[]> {
-    return this.http.get<TDistribuidoras[]>(this.apiUrl);
-  }
+getAll(): Observable<TDistribuidoras[]> {
+  return this.http.get<TDistribuidoras[]>(this.apiUrl, {
+    withCredentials: true,
+    headers: {
+      Authorization: 'Basic ' + btoa('usuarioReal:passwordReal')
+    }
+  });
+}
+
 
   getById(id: number): Observable<TDistribuidoras> {
     return this.http.get<TDistribuidoras>(`${this.apiUrl}/${id}`);

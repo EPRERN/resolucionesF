@@ -1,7 +1,7 @@
 import { T_distribuidoras } from "../distribuidoras/distribuidoras.model";
 
 export interface T_resoluciones {
-    t_resolucionesid: number;
+    t_resolucionesid?: number;
     t_resolucionesnro: string;
     distribuidora: T_distribuidoras;
     t_temasid: number;

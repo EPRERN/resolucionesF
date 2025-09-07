@@ -61,6 +61,7 @@ table {
     background: #f7fafc;
     border-radius: 12px;
     overflow: hidden;
+    table-layout: fixed;
 }
 
 thead {
@@ -106,10 +107,11 @@ td button:hover {
 .paginador {
     margin-top: 15px;
     display: flex;
-    justify-content: center;
+    justify-content: center; /* centra horizontalmente */
     align-items: center;
     gap: 10px;
 }
+
 
 .paginador button {
     padding: 5px 10px;
@@ -121,4 +123,50 @@ td button:hover {
 .paginador button:disabled {
     background: #eee;
     cursor: not-allowed;
+}
+/* Columna ID muy estrecha */
+/* Columna Nro menos ancha */
+
+/* Columna Nro menos ancha */
+th:nth-child(1),
+td:nth-child(1) {
+    width: 60px;      /* ajusta según necesites */
+    min-width: 50px;
+    text-align: center;
+}
+
+/* Columna Título más ancha */
+th:nth-child(2),
+td:nth-child(2) {
+    width: 300px;     /* la más ancha de todas */
+    min-width: 250px;
+    text-align: left; /* mejor lectura */
+}
+
+/* Opcional: Expte y Carátula ancho estándar */
+th:nth-child(3),
+td:nth-child(3),
+th:nth-child(4),
+td:nth-child(4) {
+    width: 120px;
+    min-width: 100px;
+}
+th:nth-child(6),
+td:nth-child(6) {
+    width: 30px;     /* la más ancha de todas */
+    min-width: 20px;
+    text-align: center; /* mejor lectura */
+}
+th:nth-child(5),
+td:nth-child(5) {
+    width: 60px;     /* la más ancha de todas */
+    min-width: 60px;
+    text-align: center; /* mejor lectura */
+}
+
+th:nth-child(7),
+td:nth-child(7) {
+    width: 30px;     /* la más ancha de todas */
+    min-width: 20px;
+    text-align: center; /* mejor lectura */
 }

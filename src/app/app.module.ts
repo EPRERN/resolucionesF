@@ -12,16 +12,22 @@ import { TemaslotusComponent } from './temaslotus/temaslotus.component';
 import { DistribuidorasService } from './distribuidoras/distribuidoras.service';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
 import { ResolucionesyearComponent } from './resolucionesyear/resolucionesyear.component';
+import { PdfPreviewComponent } from './resoluciones/pdf-preview/pdf-preview.component';
+import { LoginComponent } from './auth/login/login.component';
+
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     ResolucionesComponent,
     TemasComponent,
     TemaslotusComponent,
     ResolucionesyearComponent,
-    DistribuidorasComponent
-  ],
+    DistribuidorasComponent,
+    PdfPreviewComponent,
+    LoginComponent,
+      
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -1,0 +1,14 @@
+<div class="login-page">
+  <div class="login-container">
+    <h2 style="color: #3976b4;"><FONT [size]="6">Iniciar Sesión</FONT></h2>
+    <form (ngSubmit)="onLogin()">
+      <div class="input-group">
+        <input type="text" [(ngModel)]="username" name="username" placeholder="Usuario" required>
+      </div>
+      <div class="input-group">
+        <input type="password" [(ngModel)]="password" name="password" placeholder="Contraseña" required>
+      </div>
+      <button type="submit">Ingresar</button>
+    </form>
+  </div>
+</div>
