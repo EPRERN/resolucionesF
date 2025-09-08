@@ -7,14 +7,21 @@ import { ResolucionesComponent } from './resoluciones/resoluciones.component';
 import { TemasComponent } from './temas/temas.component';
 import { TemaslotusComponent } from './temaslotus/temaslotus.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { RoleGuard } from './auth/role.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'distribuidoras', component: DistribuidorasComponent, canActivate: [AuthGuard] },
-  { path: 'resoluciones', component: ResolucionesComponent, canActivate: [AuthGuard] },
-  { path: 'temas', component: TemasComponent, canActivate: [AuthGuard] },
-  { path: 'temaslotus', component: TemaslotusComponent, canActivate: [AuthGuard] },
+
+  // Solo ADMINISTRADOR puede entrar a estas rutas
+  { path: 'dashboard', component: DashboardComponent, canActivate: [RoleGuard], data: { role: 'ADMINISTRADOR' } },
+  { path: 'distribuidoras', component: DistribuidorasComponent, canActivate: [RoleGuard], data: { role: 'ADMINISTRADOR' } },
+  { path: 'temas', component: TemasComponent, canActivate: [RoleGuard], data: { role: 'ADMINISTRADOR' } },
+  { path: 'temaslotus', component: TemaslotusComponent, canActivate: [RoleGuard], data: { role: 'ADMINISTRADOR' } },
+
+  // Solo CARGADOR_RESOLUCIONES puede entrar a esta ruta
+  { path: 'resoluciones', component: ResolucionesComponent, canActivate: [RoleGuard], data: { role: 'CARGADOR_RESOLUCIONES' } },
+
+  // Ruta por defecto
   { path: '**', redirectTo: 'login' }
 ];
 

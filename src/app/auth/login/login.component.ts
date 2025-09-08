@@ -6,22 +6,29 @@ import Swal from 'sweetalert2';
 
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-      username = '';
+  username = '';
   password = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   onLogin() {
     this.authService.login(this.username, this.password).subscribe({
-      next: (success) => {
-        if (success) {
-          this.authService.setLoggedIn(true);
-          this.router.navigate(['/dashboard']);
+      next: (response) => {
+        if (response.success) {
+          this.authService.setLoggedIn(true, response.rol);
+
+          if (response.rol === 'ADMINISTRADOR') {
+            this.router.navigate(['/dashboard']);
+            console.log('administrador ')
+          } else if (response.rol === 'CARGADOR_RESOLUCIONES') {
+            this.router.navigate(['/resoluciones']);
+            console.log('marina')
+          }
         } else {
           Swal.fire({
             icon: 'error',
@@ -39,4 +46,5 @@ export class LoginComponent {
       }
     });
   }
+
 }
