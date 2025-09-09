@@ -14,6 +14,9 @@ import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http'
 import { ResolucionesyearComponent } from './resolucionesyear/resolucionesyear.component';
 import { PdfPreviewComponent } from './resoluciones/pdf-preview/pdf-preview.component';
 import { LoginComponent } from './auth/login/login.component';
+import { DashboardCargadorComponent } from './pages/dashboard-cargador/dashboard-cargador.component';
+import { NavComponent } from './pages/nav/nav.component';
+import { CargaResolucionesComponent } from './resoluciones/carga-resoluciones/carga-resoluciones.component';
 
 
 @NgModule({
@@ -26,6 +29,9 @@ import { LoginComponent } from './auth/login/login.component';
     DistribuidorasComponent,
     PdfPreviewComponent,
     LoginComponent,
+    DashboardCargadorComponent,
+    NavComponent,
+    CargaResolucionesComponent,
       
    ],
   imports: [

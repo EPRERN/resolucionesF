@@ -1,0 +1,51 @@
+<form (ngSubmit)="agregarResolucion()">
+
+    <!-- Tema -->
+    <label for="tema">Tema:</label>
+    <select id="tema" [(ngModel)]="nuevaResolucion.tema" name="tema" required>
+        <option *ngFor="let t of temas" [ngValue]="t">
+            {{ t.t_temasdescripcion }}
+        </option>
+    </select>
+
+    <!-- Nro Resolución -->
+    <label for="nro">Nro Resolución:</label>
+    <input id="nro" type="text" [(ngModel)]="nuevaResolucion.t_resolucionesnro" name="nro" placeholder="Nro Resolución"
+        required>
+
+    <!-- Expediente -->
+    <label for="expte">Expediente:</label>
+    <input id="expte" type="text" [(ngModel)]="nuevaResolucion.t_resolucionesexpte" name="expte"
+        placeholder="Expediente">
+
+    <!-- Carátula -->
+    <label for="caratula">Carátula:</label>
+    <input id="caratula" type="text" [(ngModel)]="nuevaResolucion.t_resolucionesexptecaratula" name="caratula"
+        placeholder="Carátula">
+
+    <!-- Título -->
+    <label for="titulo">Título:</label>
+    <input id="titulo" type="text" [(ngModel)]="nuevaResolucion.t_resolucionestitulo" name="titulo"
+        placeholder="Título">
+
+
+    <!-- Fecha -->
+    <label for="fecha">Fecha:</label>
+    <input id="fecha" type="text" [(ngModel)]="nuevaResolucion.t_resolucionesdate" name="fecha" readonly>
+
+    <!-- Distribuidora ID -->
+    <label for="distribuidoraId">Distribuidora ID:</label>
+    <input id="distribuidoraId" type="number" [(ngModel)]="nuevaResolucion.distribuidora.t_distribuidorasid"
+        name="distribuidoraId" readonly>
+
+    <!-- Distribuidora Nombre -->
+    <label for="distribuidoraNombre">Distribuidora:</label>
+    <input id="distribuidoraNombre" type="text" [(ngModel)]="nuevaResolucion.distribuidora.t_distribuidorasnombre"
+        name="distribuidoraNombre" readonly>
+
+    <!-- Subir archivo -->
+    <label for="file">Archivo:</label>
+    <input id="file" type="file" (change)="onFileSelected($event)">
+
+    <button type="submit">Agregar</button>
+</form>

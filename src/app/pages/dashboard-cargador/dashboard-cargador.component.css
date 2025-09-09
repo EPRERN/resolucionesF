@@ -1,0 +1,90 @@
+/* Fondo general en tonos pastel */
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #fce4ec, #e3f2fd, #e8f5e9);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Tarjeta central */
+.welcome-card {
+    background: #ffffffcc;
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 3rem 4rem;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Título */
+.welcome-card h1 {
+    font-size: 2.5rem;
+    color: #4a148c;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+/* Subtítulo */
+.subtitle {
+    font-size: 1.2rem;
+    color: #6a1b9a;
+    margin-bottom: 2rem;
+}
+
+/* Botón pastel */
+.btn-resoluciones {
+    background: linear-gradient(135deg, #587c60, #a4e5b2);
+    color: white;
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-resoluciones:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #587c60, #f1f9ff);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+
+/* Botón pastel */
+.btn-resoluciones2 {
+    background: linear-gradient(135deg, #586c7c, #a4bae5);
+    color: white;
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-resoluciones2:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #586d7c, #f1f9ff);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* Animación de aparición */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

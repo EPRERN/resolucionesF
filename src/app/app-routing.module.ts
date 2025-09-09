@@ -8,6 +8,7 @@ import { TemasComponent } from './temas/temas.component';
 import { TemaslotusComponent } from './temaslotus/temaslotus.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { RoleGuard } from './auth/role.guard';
+import { DashboardCargadorComponent } from './pages/dashboard-cargador/dashboard-cargador.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -19,8 +20,8 @@ const routes: Routes = [
   { path: 'temaslotus', component: TemaslotusComponent, canActivate: [RoleGuard], data: { role: 'ADMINISTRADOR' } },
 
   // Solo CARGADOR_RESOLUCIONES puede entrar a esta ruta
-  { path: 'resoluciones', component: ResolucionesComponent, canActivate: [RoleGuard], data: { role: 'CARGADOR_RESOLUCIONES' } },
-
+  { path: 'dashboard-cargador', component: DashboardCargadorComponent, canActivate: [RoleGuard], data: { role: 'CARGADOR_RESOLUCIONES' } },
+  {path:'resoluciones', component:ResolucionesComponent, canActivate: [RoleGuard], data:{role: 'CARGADOR_RESOLUCIONES'}},
   // Ruta por defecto
   { path: '**', redirectTo: 'login' }
 ];

@@ -26,7 +26,7 @@ export class LoginComponent {
             this.router.navigate(['/dashboard']);
             console.log('administrador ')
           } else if (response.rol === 'CARGADOR_RESOLUCIONES') {
-            this.router.navigate(['/resoluciones']);
+            this.router.navigate(['/dashboard-cargador']);
             console.log('marina')
           }
         } else {
