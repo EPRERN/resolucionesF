@@ -23,9 +23,11 @@ export class ResolucionesComponent implements OnInit {
         
         const reader = new FileReader();
         reader.onload = () => {
-            const contenido = reader.result as string;
-            const resolucion = this.parseLotusFile(contenido);
+            const arrayBuffer = reader.result as ArrayBuffer;
+            const decoder = new TextDecoder("iso-8859-1"); // <-- codificación correcta
+            const contenido = decoder.decode(arrayBuffer);
             
+            const resolucion = this.parseLotusFile(contenido);
             // Autocompletar campos
             this.nuevaResolucion.t_resolucionesnro = resolucion.NroResolucion || '';
             this.nuevaResolucion.t_resolucionesexpte = resolucion.NROEXP || '';
@@ -61,7 +63,7 @@ export class ResolucionesComponent implements OnInit {
             
             console.log("Lotus parseado:", resolucion);
         };
-        reader.readAsText(file);
+           reader.readAsArrayBuffer(file);
     }
     
     onPdfFileSelected(event: any): void {

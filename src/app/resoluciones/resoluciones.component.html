@@ -1,46 +1,78 @@
-<form (ngSubmit)="agregarResolucion()">
-    <!-- Tema -->
-    <label for="tema">Tema:</label>
-    <select id="tema" [(ngModel)]="nuevaResolucion.tema.t_temasid" name="tema" required>
+<app-nav></app-nav>
+<br><br><br>
+<div class="container">
+  <h2>Agregar Nueva Resolución</h2>
+
+  <form (ngSubmit)="agregarResolucion()">
+
+    <!-- TEMA -->
+    <div class="form-group">
+      <label for="tema">Tema:</label>
+      <select id="tema" [(ngModel)]="nuevaResolucion.tema.t_temasid" name="tema" required>
         <option *ngFor="let t of temas" [value]="t.t_temasid">
-            {{ t.t_temasdescripcion }}
+          {{ t.t_temasdescripcion }}
         </option>
-    </select>
-    
-    <!-- Nro Resolución -->
-    <label for="nro">Nro Resolución:</label>
-    <input id="nro" type="text" [(ngModel)]="nuevaResolucion.t_resolucionesnro" name="nro" required>
-    
-    <!-- Expediente -->
-    <label for="expte">Expediente:</label>
-    <input id="expte" type="text" [(ngModel)]="nuevaResolucion.t_resolucionesexpte" name="expte">
-    
-    <!-- Carátula -->
-    <label for="caratula">Carátula:</label>
-    <input id="caratula" type="text" [(ngModel)]="nuevaResolucion.t_resolucionesexptecaratula" name="caratula">
-    
-    <!-- Título -->
-    <label for="titulo">Título:</label>
-    <input id="titulo" type="text" [(ngModel)]="nuevaResolucion.t_resolucionestitulo" name="titulo">
-    
-    <!-- Fecha -->
-    <label for="fecha">Fecha:</label>
-    <input id="fecha" type="text" [value]="formatDateToBackend(nuevaResolucion.t_resolucionesdate)" readonly>
-    
-    <!-- Distribuidora -->
-    <label for="distribuidora">Distribuidora ID:</label>
-    <input id="distribuidora" type="number" [(ngModel)]="nuevaResolucion.distribuidora.t_distribuidorasid" name="distribuidora" readonly>
-    
-    <!-- 📂 Archivo Lotus (solo para parsear datos) -->
-    <label for="lotusFile">Archivo Lotus:</label>
-    <input id="lotusFile" type="file" (change)="onLotusFileSelected($event)">
-    
-    <!-- 📄 Archivo PDF (este sí se guarda en BDD) -->
-    <label for="pdfFile">Archivo PDF:</label>
-    <input id="pdfFile" type="file" accept="application/pdf" (change)="onPdfFileSelected($event)">
-    
-    <button type="submit">Agregar</button>
-</form>
+      </select>
+    </div>
+
+
+     <!-- ARCHIVO LOTUS -->
+    <div class="form-group">
+      <label for="lotusFile">Archivo Lotus (solo para parsear datos):</label>
+      <input id="lotusFile" type="file" (change)="onLotusFileSelected($event)">
+    </div>
+
+    <!-- ARCHIVO PDF -->
+    <div class="form-group">
+      <label for="pdfFile">Archivo PDF (se guarda en BDD):</label>
+      <input id="pdfFile" type="file" accept="application/pdf" (change)="onPdfFileSelected($event)">
+    </div>
+
+<br><span style="margin-left: 200px; color: #25547a; font-size: x-large;">Estos campos de abajo no se completan</span><hr>
+    <!-- NRO RESOLUCIÓN -->
+    <div class="form-group">
+      <label for="nro">Nro Resolución:</label>
+      <input id="nro" type="text" [(ngModel)]="nuevaResolucion.t_resolucionesnro" name="nro" required placeholder="Ej: 123/2025">
+    </div>
+
+    <!-- EXPEDIENTE -->
+    <div class="form-group">
+      <label for="expte">Expediente:</label>
+      <input id="expte" type="text" [(ngModel)]="nuevaResolucion.t_resolucionesexpte" name="expte" placeholder="Ej: EXP-456">
+    </div>
+
+    <!-- CARÁTULA -->
+    <div class="form-group">
+      <label for="caratula">Carátula:</label>
+      <input id="caratula" type="text" [(ngModel)]="nuevaResolucion.t_resolucionesexptecaratula" name="caratula" placeholder="Carátula del expediente">
+    </div>
+
+    <!-- TÍTULO -->
+    <div class="form-group">
+      <label for="titulo">Título:</label>
+      <input id="titulo" type="text" [(ngModel)]="nuevaResolucion.t_resolucionestitulo" name="titulo" placeholder="Título de la resolución">
+    </div>
+
+    <!-- FECHA -->
+    <div class="form-group">
+      <label for="fecha">Fecha:</label>
+      <input id="fecha" type="text" [value]="formatDateToBackend(nuevaResolucion.t_resolucionesdate)" readonly>
+    </div>
+
+    <!-- DISTRIBUIDORA -->
+    <div class="form-group">
+      <label for="distribuidora">Distribuidora ID:</label>
+      <input id="distribuidora" type="number" [(ngModel)]="nuevaResolucion.distribuidora.t_distribuidorasid" name="distribuidora" readonly>
+    </div>
+
+   
+
+    <div class="button-container">
+      <button type="submit">Guardar Resolución</button>
+    </div>
+
+  </form>
+</div>
 
 <table>
     <thead>
@@ -100,4 +132,4 @@
     </div>
 </div>
 
-<app-pdf-preview *ngIf="pdfPreviewUrl" [fileUrl]="pdfPreviewUrl" (close)="cerrarPreview()"></app-pdf-preview>
+<app-pdf-preview *ngIf="pdfPreviewUrl" [fileUrl]="pdfPreviewUrl" (close)="cerrarPreview()"></app-pdf-preview> 

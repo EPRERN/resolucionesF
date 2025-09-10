@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,14 +10,13 @@ import Swal from 'sweetalert2';
 })
 export class NavComponent {
 
-  constructor(private router:Router){}
+   constructor(private router: Router, private authService: AuthService) {}
 
   irADash(){
     this.router.navigate(['/dashboard-cargador']);
   }
 
-
-cerrarSesion() {
+  cerrarSesion() {
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Vas a cerrar tu sesión actual',
@@ -28,7 +28,9 @@ cerrarSesion() {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.router.navigate(['/login']);
+        // Llamamos a logout del AuthService
+        this.authService.logout();
+
         Swal.fire({
           icon: 'success',
           title: 'Sesión cerrada',
