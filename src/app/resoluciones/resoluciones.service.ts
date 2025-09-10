@@ -35,7 +35,8 @@ export class ResolucionesService {
     
     getPdf(id: number): Observable<Blob> {
         const url = `http://localhost:8080/api/t_resolucioness/${id}/file`;
-        return this.http.get(url, { responseType: 'blob' }); // 👈 importante responseType: 'blob'
+        return this.http.get(url, { responseType: 'blob' });
     }
+    
     
 }
