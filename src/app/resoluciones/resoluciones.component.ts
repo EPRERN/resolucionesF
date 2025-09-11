@@ -3,6 +3,7 @@ import { T_resoluciones } from './resoluciones.model';
 import { ResolucionesService } from './resoluciones.service';
 import { T_temas } from '../temas/temas.model';
 import { TemasService } from '../temas/temas.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-resoluciones',
@@ -10,6 +11,101 @@ import { TemasService } from '../temas/temas.service';
     styleUrls: ['./resoluciones.component.css']
 })
 export class ResolucionesComponent implements OnInit {
+
+    lotusFile: File | null = null;  // Lotus solo se usa para parsear
+    pdfFile: File | null = null;    // Este sí va a la BDD
+
+    onLotusFileSelected(event: any): void {
+        const file: File = event.target.files[0];
+        if (!file) return;
+
+        this.lotusFile = file;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            const arrayBuffer = reader.result as ArrayBuffer;
+            const decoder = new TextDecoder("iso-8859-1"); // <-- codificación correcta
+            const contenido = decoder.decode(arrayBuffer);
+
+            const resolucion = this.parseLotusFile(contenido);
+            // Autocompletar campos
+            this.nuevaResolucion.t_resolucionesnro = resolucion.NroResolucion || '';
+            this.nuevaResolucion.t_resolucionesexpte = resolucion.NROEXP || '';
+            this.nuevaResolucion.t_resolucionesexptecaratula = resolucion.ExtrExp || '';
+            this.nuevaResolucion.t_resolucionestitulo = resolucion.Titulo || '';
+
+            if (resolucion.FechaReg) {
+                const partes = resolucion.FechaReg.split(" ")[0].split("/");
+                this.nuevaResolucion.t_resolucionesdate = new Date(
+                    parseInt(partes[2]),
+                    parseInt(partes[1]) - 1,
+                    parseInt(partes[0])
+                );
+            }
+
+            if (resolucion.Distribuidora) {
+                const distribuidoraMap: { [key: string]: number } = {
+                    "EDERSA": 1,
+                    "CEB": 2,
+                    "CEARC": 3,
+                    "OTROS": 4,
+                    "EPRE": 5,
+                    "TODAS": 6
+                };
+                const id = distribuidoraMap[resolucion.Distribuidora.trim().toUpperCase()];
+                if (id) {
+                    this.nuevaResolucion.distribuidora = {
+                        t_distribuidorasid: id,
+                        t_distribuidorasnombre: resolucion.Distribuidora
+                    };
+                }
+            }
+
+            console.log("Lotus parseado:", resolucion);
+        };
+        reader.readAsArrayBuffer(file);
+    }
+
+    onPdfFileSelected(event: any): void {
+        const file: File = event.target.files[0];
+        if (file && file.type === "application/pdf") {
+            this.pdfFile = file;
+            console.log("PDF seleccionado:", file.name);
+        } else {
+            Swal.fire("Error", "Debe seleccionar un archivo PDF válido", "error");
+        }
+    }
+
+
+    agregarResolucion(): void {
+        this.generarTitulo();
+
+        const resolucionParaEnviar = {
+            ...this.nuevaResolucion,
+            tema: { t_temasid: this.nuevaResolucion.tema.t_temasid },
+            distribuidora: { t_distribuidorasid: this.nuevaResolucion.distribuidora.t_distribuidorasid }
+        };
+
+        const formData = new FormData();
+        formData.append(
+            "resolucion",
+            new Blob([JSON.stringify(resolucionParaEnviar)], { type: "application/json" })
+        );
+
+        if (this.pdfFile) {
+            formData.append("file", this.pdfFile);
+        }
+
+        this.resolucionesService.create(formData).subscribe(() => {
+            Swal.fire({
+                icon: "success",
+                title: "Guardado",
+                text: "La resolución se ha guardado correctamente",
+                confirmButtonText: "Aceptar"
+            }).then(() => window.location.reload());
+        });
+    }
+
 
 
     temas: T_temas[] = [];
@@ -23,7 +119,11 @@ export class ResolucionesComponent implements OnInit {
 
         t_resolucionesnro: '',
         distribuidora: { t_distribuidorasid: 1, t_distribuidorasnombre: '' },
-        tema: { t_temasid: 1 },
+        tema: {
+            t_temasid: 1,
+            t_temasdescripcion: '',
+            t_temaslotusid: 0
+        },
         t_resolucionesexpte: '',
         t_resolucionestitulo: '',
         t_resolucionesexptecaratula: '',
@@ -65,7 +165,7 @@ export class ResolucionesComponent implements OnInit {
 
     // Paginación
     page: number = 1;
-    pageSize: number = 10;
+    pageSize: number = 5;
 
     get resolucionesPaginadas(): T_resoluciones[] {
         const data = this.resolucionesFiltradas.length ? this.resolucionesFiltradas : this.resoluciones;
@@ -169,45 +269,47 @@ export class ResolucionesComponent implements OnInit {
 
 
 
-    agregarResolucion(): void {
-        // Antes de enviar, generamos el título automáticamente
-        this.generarTitulo();
+    // agregarResolucion(): void {
+    //     // Antes de enviar, generamos el título automáticamente
+    //     this.generarTitulo();
 
-        // Clonar objeto para no modificar el binding
-        const resolucionParaEnviar = { ...this.nuevaResolucion };
+    //     const resolucionParaEnviar = {
+    //         ...this.nuevaResolucion,
+    //         tema: { t_temasid: this.nuevaResolucion.tema.t_temasid },
+    //         distribuidora: { t_distribuidorasid: this.nuevaResolucion.distribuidora.t_distribuidorasid }
+    //     };
+    //     // ⚠️ Aquí dejamos la fecha como Date, NO la convertimos a string
+    //     resolucionParaEnviar.t_resolucionesdate = this.nuevaResolucion.t_resolucionesdate;
 
-        // ⚠️ Aquí dejamos la fecha como Date, NO la convertimos a string
-        resolucionParaEnviar.t_resolucionesdate = this.nuevaResolucion.t_resolucionesdate;
+    //     const formData = new FormData();
+    //     const resolucionBlob = new Blob(
+    //         [JSON.stringify(resolucionParaEnviar)],
+    //         { type: 'application/json' }
+    //     );
+    //     formData.append('resolucion', resolucionBlob);
 
-        const formData = new FormData();
-        const resolucionBlob = new Blob(
-            [JSON.stringify(resolucionParaEnviar)],
-            { type: 'application/json' }
-        );
-        formData.append('resolucion', resolucionBlob);
-
-        if (this.selectedFile) {
-            formData.append('file', this.selectedFile);
-        }
-
-        this.resolucionesService.create(formData).subscribe(() => {
-            this.cargarResoluciones();
-            this.nuevaResolucion = {
-                t_resolucionesid: 0,
-                t_resolucionesnro: '',
-                distribuidora: { t_distribuidorasid: 1, t_distribuidorasnombre: '' },
-                tema: { t_temasid: 1 },
-                t_resolucionesexpte: '',
-                t_resolucionestitulo: '',
-                t_resolucionesexptecaratula: '',
-                t_resolucionesdate: new Date()
-            };
-            this.selectedFile = null;
-        });
-    }
+    //     if (this.selectedFile) {
+    //         formData.append('file', this.selectedFile);
+    //     }
+    //     console.log('datos guardados: ', formData )
+    //     this.resolucionesService.create(formData).subscribe(() => {
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: 'Guardado',
+    //             text: 'La resolución se ha guardado correctamente',
+    //             confirmButtonText: 'Aceptar'
+    //         }).then(() => {
+    //             window.location.reload(); // 🔄 recarga la página al presionar aceptar
+    //         });
+    //     });
+    // }
 
 
     // Función auxiliar para formatear la fecha
+
+
+
+
     formatDateToBackend(date: Date): string {
         if (!date) return '';
         const year = date.getFullYear();
@@ -235,14 +337,48 @@ export class ResolucionesComponent implements OnInit {
             console.error('ID inválido, no se puede eliminar.');
             return;
         }
-        this.resolucionesService.delete(id).subscribe(() => {
-            this.cargarResoluciones();
+
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "No podrás revertir esta acción",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.resolucionesService.delete(id).subscribe(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Eliminado',
+                        text: 'La resolución ha sido eliminada',
+                        confirmButtonText: 'Aceptar'
+                    }).then(() => {
+                        window.location.reload(); // 🔄 recarga la página al confirmar
+                    });
+                });
+            }
         });
     }
 
+
     descargarPDF(id: number): void {
-        const url = `http://localhost:8080/api/t_resolucioness/${id}/download`;
-        window.open(url, '_blank');
+        this.resolucionesService.getPdf(id).subscribe({
+            next: (blob) => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `resolucion_${id}.pdf`;
+                a.click();
+                window.URL.revokeObjectURL(url);
+            },
+            error: (err) => {
+                console.error("Error descargando PDF:", err);
+                Swal.fire("Error", "No se pudo descargar el PDF", "error");
+            }
+        });
     }
 
     pdfPreviewUrl: string | null = null;

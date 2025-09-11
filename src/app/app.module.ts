@@ -20,7 +20,7 @@ import { CargaResolucionesComponent } from './resoluciones/carga-resoluciones/ca
 
 
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     ResolucionesComponent,
     TemasComponent,
@@ -32,8 +32,8 @@ import { CargaResolucionesComponent } from './resoluciones/carga-resoluciones/ca
     DashboardCargadorComponent,
     NavComponent,
     CargaResolucionesComponent,
-      
-   ],
+
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

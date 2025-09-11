@@ -2,28 +2,36 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { tap } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
-  private isLoggedIn = false;
-  private apiUrl = 'http://localhost:8080/api/auth/login';
+     private apiUrl = 'http://localhost:8080/api/auth/login';
   private userRole: string | null = null;
 
+  constructor(private http: HttpClient, private router: Router) {
+    // Cargamos el rol desde localStorage al iniciar
+    const storedRole = localStorage.getItem('userRole');
+    if (storedRole) {
+      this.userRole = storedRole;
+    }
+  }
 
-  constructor(private http: HttpClient, private router: Router) { }
   login(username: string, password: string) {
-    return this.http.post<{ success: boolean, rol: string }>(this.apiUrl, { username, password });
+    return this.http.post<{ success: boolean, rol: string }>(this.apiUrl, { username, password })
+      .pipe(tap(response => {
+        if (response.success) {
+          this.userRole = response.rol;
+          localStorage.setItem('userRole', response.rol);
+        }
+      }));
   }
 
-  setLoggedIn(value: boolean, role: string | null) {
-    this.isLoggedIn = value;
-    this.userRole = role;
-  }
-
+  // Ya no usamos isLoggedIn, solo verificamos si hay un rol
   isAuthenticated(): boolean {
-    return this.isLoggedIn;
+    return this.userRole !== null;
   }
 
   getRole(): string | null {
@@ -31,8 +39,8 @@ export class AuthService {
   }
 
   logout() {
-    this.isLoggedIn = false;
     this.userRole = null;
+    localStorage.removeItem('userRole');
     this.router.navigate(['/login']);
   }
 }
