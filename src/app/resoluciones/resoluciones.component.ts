@@ -11,29 +11,29 @@ import Swal from 'sweetalert2';
     styleUrls: ['./resoluciones.component.css']
 })
 export class ResolucionesComponent implements OnInit {
-    
+
     lotusFile: File | null = null;  // Lotus solo se usa para parsear
     pdfFile: File | null = null;    // Este sí va a la BDD
-    
+
     onLotusFileSelected(event: any): void {
         const file: File = event.target.files[0];
         if (!file) return;
-        
+
         this.lotusFile = file;
-        
+
         const reader = new FileReader();
         reader.onload = () => {
             const arrayBuffer = reader.result as ArrayBuffer;
             const decoder = new TextDecoder("iso-8859-1"); // <-- codificación correcta
             const contenido = decoder.decode(arrayBuffer);
-            
+
             const resolucion = this.parseLotusFile(contenido);
             // Autocompletar campos
             this.nuevaResolucion.t_resolucionesnro = resolucion.NroResolucion || '';
             this.nuevaResolucion.t_resolucionesexpte = resolucion.NROEXP || '';
             this.nuevaResolucion.t_resolucionesexptecaratula = resolucion.ExtrExp || '';
             this.nuevaResolucion.t_resolucionestitulo = resolucion.Titulo || '';
-            
+
             if (resolucion.FechaReg) {
                 const partes = resolucion.FechaReg.split(" ")[0].split("/");
                 this.nuevaResolucion.t_resolucionesdate = new Date(
@@ -42,7 +42,7 @@ export class ResolucionesComponent implements OnInit {
                     parseInt(partes[0])
                 );
             }
-            
+
             if (resolucion.Distribuidora) {
                 const distribuidoraMap: { [key: string]: number } = {
                     "EDERSA": 1,
@@ -60,12 +60,12 @@ export class ResolucionesComponent implements OnInit {
                     };
                 }
             }
-            
+
             console.log("Lotus parseado:", resolucion);
         };
         reader.readAsArrayBuffer(file);
     }
-    
+
     onPdfFileSelected(event: any): void {
         const file: File = event.target.files[0];
         if (file && file.type === "application/pdf") {
@@ -75,27 +75,27 @@ export class ResolucionesComponent implements OnInit {
             Swal.fire("Error", "Debe seleccionar un archivo PDF válido", "error");
         }
     }
-    
-    
+
+
     agregarResolucion(): void {
         this.generarTitulo();
-        
+
         const resolucionParaEnviar = {
             ...this.nuevaResolucion,
             tema: { t_temasid: this.nuevaResolucion.tema.t_temasid },
             distribuidora: { t_distribuidorasid: this.nuevaResolucion.distribuidora.t_distribuidorasid }
         };
-        
+
         const formData = new FormData();
         formData.append(
             "resolucion",
             new Blob([JSON.stringify(resolucionParaEnviar)], { type: "application/json" })
         );
-        
+
         if (this.pdfFile) {
-            formData.append("file", this.pdfFile); // 👉 Solo este se guarda
+            formData.append("file", this.pdfFile);
         }
-        
+
         this.resolucionesService.create(formData).subscribe(() => {
             Swal.fire({
                 icon: "success",
@@ -109,18 +109,18 @@ export class ResolucionesComponent implements OnInit {
         });
         
     }
-    
-    
-    
+
+
+
     temas: T_temas[] = [];
-    
+
     filtroNro: string = '';
     filtroExpte: string = '';
     resolucionesFiltradas: T_resoluciones[] = [];
-    
+
     resoluciones: T_resoluciones[] = [];
     nuevaResolucion: T_resoluciones = {
-        
+
         t_resolucionesnro: '',
         distribuidora: { t_distribuidorasid: 1, t_distribuidorasnombre: '' },
         tema: {
@@ -134,60 +134,56 @@ export class ResolucionesComponent implements OnInit {
         t_resolucionesdate: new Date()
     };
     selectedFile: File | null = null;
-    
+
     constructor(private resolucionesService: ResolucionesService, private temasService: TemasService) { }
-    
+
     ngOnInit(): void {
         this.cargarResoluciones();
         this.temasService.getAll().subscribe(data => {
             this.temas = data;
         });
     }
-    
-    
-    
+
+
+
     aplicarFiltro(): void {
         this.resolucionesFiltradas = this.resoluciones.filter(r => {
             const coincideNro = this.filtroNro
-            ? r.t_resolucionesnro.toLowerCase().includes(this.filtroNro.toLowerCase())
-            : true;
+                ? r.t_resolucionesnro.toLowerCase().includes(this.filtroNro.toLowerCase())
+                : true;
             const coincideExpte = this.filtroExpte
-            ? r.t_resolucionesexpte.toLowerCase().includes(this.filtroExpte.toLowerCase())
-            : true;
+                ? r.t_resolucionesexpte.toLowerCase().includes(this.filtroExpte.toLowerCase())
+                : true;
             return coincideNro && coincideExpte;
         });
         this.page = 1; // resetear paginación al filtrar
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
     // Paginación
     page: number = 1;
-    pageSize: number = 10;
-    
+    pageSize: number = 5;
+
     get resolucionesPaginadas(): T_resoluciones[] {
         const data = this.resolucionesFiltradas;
         const startIndex = (this.page - 1) * this.pageSize;
         const endIndex = startIndex + this.pageSize;
         return data.slice(startIndex, endIndex);
     }
-    
+
     get totalPages(): number {
         const data = this.resolucionesFiltradas;
         return Math.ceil(data.length / this.pageSize) || 1; // devolvemos al menos 1 para que no rompa el input de página
     }
-    
-    
-    
-    
-    
-    
+
+
     cargarResoluciones(): void {
         this.resolucionesService.getAll().subscribe(data => {
             this.resoluciones = data;
@@ -195,26 +191,24 @@ export class ResolucionesComponent implements OnInit {
             this.page = this.totalPages; // ir a última página
         });
     }
-    
-    
-    
-    onFileSelected(event: any): void {
+
+  onFileSelected(event: any): void {
         const file: File = event.target.files[0];
         if (!file) return;
-        
+
         this.selectedFile = file; // guardamos el archivo para subir después
-        
+
         const reader = new FileReader();
         reader.onload = () => {
             const contenido = reader.result as string;
             const resolucion = this.parseLotusFile(contenido);
-            
+
             // asignar valores a nuevaResolucion
             this.nuevaResolucion.t_resolucionesnro = resolucion.NroResolucion || '';
             this.nuevaResolucion.t_resolucionesexpte = resolucion.NROEXP || '';
             this.nuevaResolucion.t_resolucionesexptecaratula = resolucion.ExtrExp || '';
             this.nuevaResolucion.t_resolucionestitulo = resolucion.Titulo || '';
-            
+
             // Fecha
             if (resolucion.FechaReg) {
                 // suponiendo formato "dd/MM/yyyy HH:mm:ss"
@@ -226,7 +220,7 @@ export class ResolucionesComponent implements OnInit {
                 );
                 this.nuevaResolucion.t_resolucionesdate = fecha;
             }
-            
+
             // Distribuidora
             if (resolucion.Distribuidora) {
                 const distribuidoraMap: { [key: string]: number } = {
@@ -245,39 +239,35 @@ export class ResolucionesComponent implements OnInit {
                     };
                 }
             }
-            
+
             console.log("Archivo parseado:", resolucion);
             console.log("Nueva resolución generada:", this.nuevaResolucion);
         };
         reader.readAsText(file);
     }
-    
-    
+
+
     private parseLotusFile(contenido: string): any {
         const resultado: any = {};
         const lineas = contenido.split(/\r?\n/);
-        
+
         for (const linea of lineas) {
             const [clave, ...valorParts] = linea.split(':');
             if (clave && valorParts.length > 0) {
                 resultado[clave.trim()] = valorParts.join(':').trim();
             }
         }
-        
+
         return resultado;
     }
-    
-    
-    
+
+
+
     private generarTitulo(): void {
         this.nuevaResolucion.t_resolucionestitulo =
-        `Res. ${this.nuevaResolucion.t_resolucionesnro} ${this.nuevaResolucion.t_resolucionesexpte} ${this.nuevaResolucion.t_resolucionesexptecaratula}`;
+            `Res. ${this.nuevaResolucion.t_resolucionesnro} ${this.nuevaResolucion.t_resolucionesexpte} ${this.nuevaResolucion.t_resolucionesexptecaratula}`;
     }
-    
-    
-    
-    
-    
+
     formatDateToBackend(date: Date): string {
         if (!date) return '';
         const year = date.getFullYear();
@@ -285,12 +275,12 @@ export class ResolucionesComponent implements OnInit {
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day} 00:00:00`;
     }
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
     irAPagina(): void {
         if (this.page < 1) {
             this.page = 1;
@@ -298,14 +288,14 @@ export class ResolucionesComponent implements OnInit {
             this.page = this.totalPages;
         }
     }
-    
-    
+
+
     eliminarResolucion(id?: number): void {
         if (id == null) {
             console.error('ID inválido, no se puede eliminar.');
             return;
         }
-        
+
         Swal.fire({
             title: '¿Estás seguro?',
             text: "No podrás revertir esta acción",
@@ -330,8 +320,8 @@ export class ResolucionesComponent implements OnInit {
             }
         });
     }
-    
-    
+
+
     descargarPDF(id: number): void {
         this.resolucionesService.getPdf(id).subscribe({
             next: (blob) => {
@@ -348,9 +338,9 @@ export class ResolucionesComponent implements OnInit {
             }
         });
     }
-    
+
     pdfPreviewUrl: string | null = null;
-    
+
     abrirPreview(idOrFile: number | File): void {
         if (idOrFile instanceof File) {
             // Caso archivo local
@@ -365,10 +355,10 @@ export class ResolucionesComponent implements OnInit {
             });
         }
     }
-    
-    
+
+
     cerrarPreview(): void {
         this.pdfPreviewUrl = null;
     }
-    
+
 }

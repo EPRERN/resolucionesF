@@ -113,7 +113,7 @@ input[type="file"] {
 table {
     width: 80%;
     border-collapse: separate;
-    margin-left: 300px;
+    margin-left: 150px;
     border-spacing: 0;
     border-radius: 12px;
     overflow: hidden;
@@ -130,6 +130,7 @@ thead th {
     text-align: center;
     border-left: 1px solid #e2e8f0;
     border-right: 1px solid #e2e8f0;
+    border-bottom-right-radius: 1px solid #e2e8f0;
 }
 
 /* Redondea esquinas del primer y último th */
@@ -219,6 +220,7 @@ table {
 .paginador {
     
     display: flex;
+    width: 90%;
     flex-wrap: wrap;
     justify-content: center; 
     align-items: center;
