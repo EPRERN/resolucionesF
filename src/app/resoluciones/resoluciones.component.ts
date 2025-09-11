@@ -102,8 +102,12 @@ export class ResolucionesComponent implements OnInit {
                 title: "Guardado",
                 text: "La resolución se ha guardado correctamente",
                 confirmButtonText: "Aceptar"
-            }).then(() => window.location.reload());
+            }).then(() => {
+                this.cargarResoluciones(); // recarga la lista
+                this.page = this.totalPages; // te manda a la última página
+            });
         });
+        
     }
 
 
@@ -168,30 +172,27 @@ export class ResolucionesComponent implements OnInit {
     pageSize: number = 5;
 
     get resolucionesPaginadas(): T_resoluciones[] {
-        const data = this.resolucionesFiltradas.length ? this.resolucionesFiltradas : this.resoluciones;
+        const data = this.resolucionesFiltradas;
         const startIndex = (this.page - 1) * this.pageSize;
         const endIndex = startIndex + this.pageSize;
         return data.slice(startIndex, endIndex);
     }
 
     get totalPages(): number {
-        const data = this.resolucionesFiltradas.length ? this.resolucionesFiltradas : this.resoluciones;
-        return Math.ceil(data.length / this.pageSize);
+        const data = this.resolucionesFiltradas;
+        return Math.ceil(data.length / this.pageSize) || 1; // devolvemos al menos 1 para que no rompa el input de página
     }
-
-
-
 
 
     cargarResoluciones(): void {
         this.resolucionesService.getAll().subscribe(data => {
             this.resoluciones = data;
-            this.resolucionesFiltradas = data; // inicial
+            this.resolucionesFiltradas = [...data]; // clon inicial
+            this.page = this.totalPages; // ir a última página
         });
     }
 
-
-    onFileSelected(event: any): void {
+  onFileSelected(event: any): void {
         const file: File = event.target.files[0];
         if (!file) return;
 
@@ -266,49 +267,6 @@ export class ResolucionesComponent implements OnInit {
         this.nuevaResolucion.t_resolucionestitulo =
             `Res. ${this.nuevaResolucion.t_resolucionesnro} ${this.nuevaResolucion.t_resolucionesexpte} ${this.nuevaResolucion.t_resolucionesexptecaratula}`;
     }
-
-
-
-    // agregarResolucion(): void {
-    //     // Antes de enviar, generamos el título automáticamente
-    //     this.generarTitulo();
-
-    //     const resolucionParaEnviar = {
-    //         ...this.nuevaResolucion,
-    //         tema: { t_temasid: this.nuevaResolucion.tema.t_temasid },
-    //         distribuidora: { t_distribuidorasid: this.nuevaResolucion.distribuidora.t_distribuidorasid }
-    //     };
-    //     // ⚠️ Aquí dejamos la fecha como Date, NO la convertimos a string
-    //     resolucionParaEnviar.t_resolucionesdate = this.nuevaResolucion.t_resolucionesdate;
-
-    //     const formData = new FormData();
-    //     const resolucionBlob = new Blob(
-    //         [JSON.stringify(resolucionParaEnviar)],
-    //         { type: 'application/json' }
-    //     );
-    //     formData.append('resolucion', resolucionBlob);
-
-    //     if (this.selectedFile) {
-    //         formData.append('file', this.selectedFile);
-    //     }
-    //     console.log('datos guardados: ', formData )
-    //     this.resolucionesService.create(formData).subscribe(() => {
-    //         Swal.fire({
-    //             icon: 'success',
-    //             title: 'Guardado',
-    //             text: 'La resolución se ha guardado correctamente',
-    //             confirmButtonText: 'Aceptar'
-    //         }).then(() => {
-    //             window.location.reload(); // 🔄 recarga la página al presionar aceptar
-    //         });
-    //     });
-    // }
-
-
-    // Función auxiliar para formatear la fecha
-
-
-
 
     formatDateToBackend(date: Date): string {
         if (!date) return '';

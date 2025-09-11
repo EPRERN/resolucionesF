@@ -111,7 +111,7 @@ input[type="file"] {
 
 /* ===== TABLA ===== */
 table {
-    width: 100%;
+    width: 80%;
     border-collapse: separate;
     margin-left: 150px;
     border-spacing: 0;
@@ -159,11 +159,12 @@ tbody td {
 tbody tr:nth-child(even) {
     background: #f7fafc;
 }
-
 tbody tr:hover {
-    background: #edf2f7;
-    transition: background 0.2s;
+    background: #efefef;
+    transition: background 0.2s, color 0.2s;
+    font-style: oblique;
 }
+
 
 /* Botones dentro de tabla */
 td button {
@@ -217,10 +218,11 @@ table {
 }
 /* ===== PAGINADOR ESTILIZADO ===== */
 .paginador {
+    
     display: flex;
     width: 90%;
     flex-wrap: wrap;
-    justify-content: center; /* centra horizontalmente */
+    justify-content: center; 
     align-items: center;
     gap: 10px;
     margin: 20px 0 10px 0;
