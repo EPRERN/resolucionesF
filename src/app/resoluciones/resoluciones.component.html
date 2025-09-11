@@ -1,8 +1,22 @@
 <app-nav></app-nav>
 <br><br><br>
 <div class="container">
-    <h2>Agregar Nueva Resolución</h2>
-    
+    <div class="header-container">
+        <h2>Nueva Resolución</h2>
+        
+        <div class="tooltip-container">
+            <button class="help-button">¿Cómo cargo? &nbsp;&nbsp;&nbsp; (❔)</button>
+            <span class="tooltip-text">
+            <br>
+                1️ &nbsp;&nbsp;<strong>Selecciona un tema </strong><br><br>
+                2️⃣ &nbsp;&nbsp;<strong>Sube el archivo Lotus </strong><br><br>
+                3️⃣ &nbsp;&nbsp;<strong> Sube el archivo PDF</strong> <br><br>
+                4️⃣ &nbsp;&nbsp;<strong>Click en "Cargar Resolucion"</strong> <br><br>
+                
+            </span>
+        </div>
+        
+    </div> 
     <form (ngSubmit)="agregarResolucion()">
         
         <!-- TEMA -->
@@ -26,9 +40,13 @@
         <div class="form-group">
             <label for="pdfFile">Archivo PDF (se guarda en BDD):</label>
             <input id="pdfFile" type="file" accept="application/pdf" (change)="onPdfFileSelected($event)">
-        </div>
+        </div><br style="margin-top: -15px;">
+        <div class="button-container">
+            <button type="submit">Cargar Resolución</button>
+        </div><br>
+        <br><span style="margin-left: 120px;  color: #ffffff; font-size: xx-large;" class="cormorant"><strong>Estos campos de abajo no se completan</strong></span><hr>
+        <br>
         
-        <br><span style="margin-left: 200px; color: #25547a; font-size: x-large;">Estos campos de abajo no se completan</span><hr>
         <!-- NRO RESOLUCIÓN -->
         <div class="form-group">
             <label for="nro">Nro Resolución:</label>
@@ -67,9 +85,7 @@
         
         
         
-        <div class="button-container">
-            <button type="submit">Guardar Resolución</button>
-        </div>
+        
         
     </form>
 </div>
