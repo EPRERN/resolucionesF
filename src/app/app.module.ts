@@ -17,6 +17,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { DashboardCargadorComponent } from './pages/dashboard-cargador/dashboard-cargador.component';
 import { NavComponent } from './pages/nav/nav.component';
 import { CargaResolucionesComponent } from './resoluciones/carga-resoluciones/carga-resoluciones.component';
+import { NavAdminComponent } from './pages/nav-admin/nav-admin.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { CargaResolucionesComponent } from './resoluciones/carga-resoluciones/ca
     DashboardCargadorComponent,
     NavComponent,
     CargaResolucionesComponent,
+    NavAdminComponent,
 
   ],
   imports: [

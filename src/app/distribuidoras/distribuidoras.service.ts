@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 
 export interface TDistribuidoras {
@@ -14,18 +15,21 @@ export interface TDistribuidoras {
 })
 export class DistribuidorasService {
 
-private apiUrl = 'http://localhost:8080/api/t_distribuidorass'; // Ajusta el puerto si tu backend usa otro
 
-  constructor(private http: HttpClient) {}
+  private apiUrl: string = environment.apiUrl + '/api/t_distribuidorass';
 
-getAll(): Observable<TDistribuidoras[]> {
-  return this.http.get<TDistribuidoras[]>(this.apiUrl, {
-    withCredentials: true,
-    headers: {
-      Authorization: 'Basic ' + btoa('usuarioReal:passwordReal')
-    }
-  });
-}
+
+
+  constructor(private http: HttpClient) { }
+
+  getAll(): Observable<TDistribuidoras[]> {
+    return this.http.get<TDistribuidoras[]>(this.apiUrl, {
+      withCredentials: true,
+      headers: {
+        Authorization: 'Basic ' + btoa('usuarioReal:passwordReal')
+      }
+    });
+  }
 
 
   getById(id: number): Observable<TDistribuidoras> {

@@ -23,12 +23,12 @@ const routes: Routes = [
   { path: 'dashboard-cargador', component: DashboardCargadorComponent, canActivate: [RoleGuard], data: { role: 'CARGADOR_RESOLUCIONES' } },
   {path:'resoluciones', component:ResolucionesComponent, canActivate: [RoleGuard], data:{role: 'CARGADOR_RESOLUCIONES'}},
   // Ruta por defecto
-  { path: '**', redirectTo: 'login' }
+  { path: '', redirectTo: '/login',pathMatch:'full' }
 ];
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

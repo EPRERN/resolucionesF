@@ -1,0 +1,165 @@
+/* ===== Contenedor general ===== */
+.container {
+    max-width: 950px;
+    margin: 2rem auto;
+    padding: 3rem;
+    background: #fdfdfd;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== Título ===== */
+.container h2 {
+    text-align: center;
+    color: #3b3e66;
+    font-weight: 900;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    letter-spacing: 1px;
+}
+
+/* ===== Formulario agregar distribuidora ===== */
+.form-agregar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 2rem;
+}
+
+.form-agregar input {
+    flex: 1;
+    padding: 14px 18px;
+    border-radius: 25px;
+    border: none;
+    background: #f5f7ff;
+    font-size: 1rem;
+    color: #2f32e9;
+    box-shadow: inset 5px 5px 10px rgba(0,0,0,0.03);
+    transition: all 0.3s ease;
+}
+
+.form-agregar input::placeholder {
+    color: #606788;
+}
+
+.form-agregar input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(11, 79, 158, 0.4);
+}
+
+/* Botón agregar */
+.form-agregar button {
+    padding: 14px 25px;
+    border-radius: 25px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(135deg, #a5f3fc, #38bdf8);
+    color: #1e3a8a;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.form-agregar button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* ===== Tabla ===== */
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 25px;
+}
+
+/* Tabla */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+    font-size: 1rem;
+}
+
+/* Encabezado */
+thead tr {
+    background: linear-gradient(90deg, #a5b9d7b5, #729ac2); /* colores pastel cálidos */
+    color: #3b3e66;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+thead th {
+    padding: 16px 20px;
+    border-radius: 12px 12px 0 0;
+    letter-spacing: 0.5px;
+    text-align: left;
+}
+
+/* Filas */
+tbody tr {
+    background: #e0f2fe; /* azul pastel suave */
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+tbody tr:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+
+tbody td {
+    padding: 14px 20px;
+    vertical-align: middle;
+    color: #3b3e66;
+}
+
+/* Inputs dentro de la tabla */
+tbody input {
+    padding: 10px 12px;
+    border-radius: 20px;
+    border: none;
+    background: #a6d7a5; /* amarillo pastel claro */
+    font-size: 0.95rem;
+    width: 100%;
+    color: #3b3e66;
+    transition: all 0.2s ease;
+}
+
+tbody input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(147, 197, 253, 0.4);
+}
+
+/* Botones de acción */
+tbody button {
+    margin-right: 6px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+tbody button:nth-child(1) { background: #93c5fd; } /* Editar - azul pastel */
+tbody button:nth-child(2) { background: #6ee7b7; } /* Guardar - verde pastel */
+tbody button:nth-child(3) { background: #5daa72; color:#3b3e66; } /* Cancelar - amarillo pastel */
+tbody button:nth-child(4) { background: #fca5a5; } /* Eliminar - rojo pastel */
+
+tbody button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* Scroll elegante */
+.table-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: #a5f3fc;
+    border-radius: 10px;
+}
+.table-wrapper::-webkit-scrollbar-track {
+    background: #fef9c3;
+}

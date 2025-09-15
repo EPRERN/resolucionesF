@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 
 
@@ -15,7 +16,10 @@ export interface TResolucionesyears{
 })
 export class ResolucionesyearService {
 
-private apiUrl = 'http://localhost:8080/api/t_resolucionesyears'; // Ajusta el puerto si tu backend usa otro
+
+  private apiUrl: string = environment.apiUrl + '/api/t_resolucionesyears';
+  
+
 
   constructor(private http: HttpClient) {}
 

@@ -13,9 +13,9 @@ import Swal from 'sweetalert2';
 export class LoginComponent {
     username = '';
     password = '';
-    
+
     constructor(private authService: AuthService, private router: Router) { }
-    
+
     ngOnInit(): void {
         if (this.authService.isAuthenticated()) {
             const role = this.authService.getRole();
@@ -26,10 +26,7 @@ export class LoginComponent {
             }
         }
     }
-    
-    
-    
-    
+
     onLogin() {
         this.authService.login(this.username, this.password).subscribe({
             next: (response) => {
@@ -56,5 +53,5 @@ export class LoginComponent {
             }
         });
     }
-    
 }
+
