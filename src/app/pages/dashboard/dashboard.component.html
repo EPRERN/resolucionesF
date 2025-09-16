@@ -1,12 +1,13 @@
 <div class="dashboard">
-  <h2>Bienvenido al Dashboard</h2>
+  <h2>Bienvenido Administrador</h2>
   <p>Seleccione a dónde desea ir:</p>
 
   <div class="button-group">
     <button (click)="goTo('distribuidoras')">Distribuidoras</button>
-    <button (click)="goTo('resoluciones')">Resoluciones</button>
+    <!-- <button (click)="goTo('resoluciones')">Resoluciones</button> -->
     <button (click)="goTo('temas')">Temas</button>
     <button (click)="goTo('temaslotus')">Temas Lotus</button>
-    <button (click)="logout()">Cerrar sesión</button>
-  </div>
+    <button (click)="goTo('resolucionesyear')">Años</button>
+    <button class="logout-btn" (click)="logout()"><span>Cerrar sesión</span></button>
+    </div>
 </div>

@@ -1,26 +1,176 @@
-.dashboard {
-  text-align: center;
-  margin-top: 50px;
+/* ======== Animaciones clave ======== */
+@keyframes breathingGlow {
+  0%, 100% { box-shadow: 0 0 12px rgba(67, 240, 253, 0.2); transform: scale(1); }
+  50%      { box-shadow: 0 0 24px rgba(47, 189, 233, 0.4); transform: scale(1.02); }
 }
 
-.button-group {
+/* ======== Layout general ======== */
+.dashboard {
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #206674 0%, #1a1a1a 100%);
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-width: 200px;
-  margin: auto;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #f2f2f2;
+  text-align: center;
+  /* Entrada elegante solo para el contenedor */
+  animation: fadeInContainer 1s ease-out forwards;
 }
 
-button {
-  padding: 10px;
+@keyframes fadeInContainer {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ======== Título ======== */
+.dashboard h2 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  color: #f5f5f5;
+}
+
+/* ======== Subtítulo ======== */
+.dashboard p {
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+  opacity: 0.9;
+  color: #d6d6d6;
+}
+
+/* ======== Contenedor de botones ======== */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: center;
+  
+}
+
+/* ======== Botones ======== */
+.button-group button {
+  background: #166c8e;
+  color: #f8f8f8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.9rem 2.2rem;
+  
   border: none;
-  border-radius: 8px;
-  background-color: #1976d2;
-  color: white;
+  border-radius: 14px;
   cursor: pointer;
-  font-size: 16px;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+  /* Botones visibles desde el inicio */
+  opacity: 1;
+  /* Resplandor suave continuo */
+  animation: breathingGlow 4s ease-in-out infinite;
 }
 
-button:hover {
-  background-color: #1565c0;
+/* Hover con efecto elegante */
+.button-group button:hover {
+  background: #444444;
+  transform: translateY(-4px) scale(1.04);
+  color: #458db4; /* toque dorado */
+  box-shadow: 0 0 18px rgba(51, 158, 177, 0.4);
 }
+
+/* Efecto clic */
+.button-group button:active {
+  transform: translateY(0) scale(0.96);
+}
+
+/* Botón de cerrar sesión diferenciado */
+.button-group button:last-child {
+  background: #b33a3a;
+  color: #fff;
+  animation: none; /* sin glow permanente para diferenciar */
+}
+
+
+.button-group button:last-child:hover {
+  background: #a32f2f;
+  color: #ffd2d2;
+  box-shadow: 0 0 18px rgba(33, 95, 131, 0.4);
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes textPulse {
+  0% {
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 1);
+  }
+  100% {
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+  }
+}
+
+/* ======== Botón de cerrar sesión con estilo destacado ======== */
+.button-group button.logout-btn {
+  background: linear-gradient(135deg, #d64545, #a12e2e);
+  color: #fff;
+  font-weight: 700;
+  padding: 0.95rem 2.5rem;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+  box-shadow: 0 4px 16px rgba(214, 69, 69, 0.3);
+  animation: fadeInDown 0.8s ease-out forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Brillo de advertencia sutil */
+.button-group button.logout-btn::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -75%;
+  width: 50%;
+  height: 100%;
+  background: rgba(255,255,255,0.15);
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+}
+
+/* Hover con efecto de “barrido” y resplandor */
+.button-group button.logout-btn:hover {
+  background: linear-gradient(135deg, #b93737, #8a1f1f);
+  box-shadow: 0 6px 22px rgba(214, 69, 69, 0.5);
+  transform: translateY(-3px) scale(1.05);
+}
+
+.button-group button.logout-btn:hover::after {
+  left: 130%;
+}
+
+/* Efecto de texto pulsante en hover */
+.button-group button.logout-btn span {
+  display: inline-block;
+  animation: none;
+}
+
+.button-group button.logout-btn:hover span {
+  animation: textPulse 1.5s ease-in-out infinite;
+}
+
+/* Efecto clic */
+.button-group button.logout-btn:active {
+  transform: translateY(0) scale(0.95);
+  box-shadow: 0 4px 12px rgba(214, 69, 69, 0.4);
+}
+

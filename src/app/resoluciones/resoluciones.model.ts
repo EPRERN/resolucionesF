@@ -13,3 +13,5 @@ export interface T_resoluciones {
     t_resolucionesdate: Date;
 }
 
+
+

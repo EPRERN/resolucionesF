@@ -185,14 +185,6 @@ export class ResolucionesComponent implements OnInit {
 
 
 
-    cargarResoluciones(): void {
-        this.resolucionesService.getAll().subscribe(data => {
-            this.resoluciones = data;
-            this.resolucionesFiltradas = [...data]; // clon inicial
-            this.page = this.totalPages; // ir a última página
-        });
-    }
-
 
     onFileSelected(event: any): void {
         const file: File = event.target.files[0];

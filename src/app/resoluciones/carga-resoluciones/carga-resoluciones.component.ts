@@ -3,6 +3,8 @@ import { T_resoluciones } from '../resoluciones.model';
 import { ResolucionesService } from '../resoluciones.service';
 import { T_temas } from 'src/app/temas/temas.model';
 import { TemasService } from 'src/app/temas/temas.service';
+import Swal from 'sweetalert2';
+import { ResolucionDTO } from './resolucionesDTO.model';
 
 @Component({
   selector: 'app-carga-resoluciones',
@@ -12,7 +14,7 @@ import { TemasService } from 'src/app/temas/temas.service';
 export class CargaResolucionesComponent {
 
 
-  resoluciones: T_resoluciones[] = [];
+
   temas: T_temas[] = [];
 
   nuevaResolucion: T_resoluciones = {
@@ -30,6 +32,7 @@ export class CargaResolucionesComponent {
 
 
   ngOnInit(): void {
+    this.cargarResoluciones();
     this.temasService.getAll().subscribe(data => {
       this.temas = data;
     });
@@ -78,11 +81,26 @@ export class CargaResolucionesComponent {
       `Res. ${this.nuevaResolucion.t_resolucionesnro} ${this.nuevaResolucion.t_resolucionesexpte} ${this.nuevaResolucion.t_resolucionesexptecaratula}`;
   }
 
-  resolucionesFiltradas: T_resoluciones[] = [];
+
+  resoluciones: ResolucionDTO[] = [];
+  resolucionesFiltradas: ResolucionDTO[] = [];
+
+
+  loading: boolean = false;  // 👈 Nueva bandera de carga
+
+
   cargarResoluciones(): void {
-    this.resolucionesService.getAll().subscribe(data => {
-      this.resoluciones = data;
-      this.resolucionesFiltradas = data; // inicial
+    this.loading = true; // mostrar loader
+    this.resolucionesService.getAll().subscribe({
+      next: (data) => {
+        this.resoluciones = data;
+        this.resolucionesFiltradas = data;
+        this.loading = false; // ocultar loader cuando termina
+      },
+      error: (err) => {
+        console.error("Error al cargar resoluciones:", err);
+        this.loading = false; // ocultar loader aunque falle
+      }
     });
   }
 
@@ -114,4 +132,114 @@ export class CargaResolucionesComponent {
       this.selectedFile = null;
     });
   }
+
+  page: number = 1;
+  pageSize: number = 10;
+
+  get resolucionesPaginadas(): ResolucionDTO[] {
+    const data = this.resolucionesFiltradas;
+    const startIndex = (this.page - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    return data.slice(startIndex, endIndex);
+  }
+
+
+  get totalPages(): number {
+    const data = this.resolucionesFiltradas;
+    return Math.ceil(data.length / this.pageSize) || 1; // devolvemos al menos 1 para que no rompa el input de página
+  }
+
+  irAPagina(): void {
+    if (this.page < 1) {
+      this.page = 1;
+    } else if (this.page > this.totalPages) {
+      this.page = this.totalPages;
+    }
+  }
+  filtroNro: string = '';
+  filtroExpte: string = '';
+
+
+  aplicarFiltro(): void {
+    this.resolucionesFiltradas = this.resoluciones.filter(r => {
+      const coincideNro = this.filtroNro
+        ? r.t_resolucionesnro.toLowerCase().includes(this.filtroNro.toLowerCase())
+        : true;
+      const coincideExpte = this.filtroExpte
+        ? r.t_resolucionesexpte.toLowerCase().includes(this.filtroExpte.toLowerCase())
+        : true;
+      return coincideNro && coincideExpte;
+    });
+    this.page = 1; // resetear paginación al filtrar
+  }
+
+  eliminarResolucion(id?: number): void {
+    if (id == null) {
+      console.error('ID inválido, no se puede eliminar.');
+      return;
+    }
+
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "No podrás revertir esta acción",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.resolucionesService.delete(id).subscribe(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Eliminado',
+            text: 'La resolución ha sido eliminada',
+            confirmButtonText: 'Aceptar'
+          }).then(() => {
+            window.location.reload(); // 🔄 recarga la página al confirmar
+          });
+        });
+      }
+    });
+  }
+  descargarPDF(id: number): void {
+    this.resolucionesService.getPdf(id).subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `resolucion_${id}.pdf`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => {
+        console.error("Error descargando PDF:", err);
+        Swal.fire("Error", "No se pudo descargar el PDF", "error");
+      }
+    });
+  }
+
+  pdfPreviewUrl: string | null = null;
+
+  abrirPreview(idOrFile: number | File): void {
+    if (idOrFile instanceof File) {
+      // Caso archivo local
+      const reader = new FileReader();
+      reader.onload = () => this.pdfPreviewUrl = reader.result as string;
+      reader.readAsDataURL(idOrFile);
+    } else {
+      // Caso archivo desde backend
+      this.resolucionesService.getPdf(idOrFile).subscribe(blob => {
+        const url = URL.createObjectURL(blob); // Creamos un URL temporal
+        this.pdfPreviewUrl = url;
+      });
+    }
+  }
+
+
+  cerrarPreview(): void {
+    this.pdfPreviewUrl = null;
+  }
+
 }

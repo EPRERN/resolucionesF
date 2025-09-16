@@ -13,4 +13,8 @@ export class DashboardCargadorComponent {
   irAResoluciones(){
     this.route.navigate(['/resoluciones'])
   }
+
+  verResoluciones(){
+    this.route.navigate(['/carga-resoluciones'])
+  }
 }
