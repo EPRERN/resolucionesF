@@ -1,3 +1,47 @@
-<p>
-  temas works!
-</p>
+<app-nav-admin></app-nav-admin>
+<br>
+<div class="container">
+  <h2>Temas</h2>
+
+  <!-- Formulario para agregar nueva -->
+  <div class="form-agregar">
+    <input [(ngModel)]="nuevoTema.t_temasdescripcion" placeholder="Nombre del tema" />
+    <button (click)="agregarTema()">Agregar</button>
+  </div>
+
+  <!-- Listado -->
+  <div class="table-wrapper">
+    <table border="1" width="100%">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tema</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+
+
+
+
+        <tr *ngFor="let tema of temas">
+          <td>{{ tema.t_temasid }}</td>
+          <td *ngIf="editando?.t_temasid !== tema.t_temasid">{{ tema.t_temasdescripcion }}</td>
+          <td *ngIf="editando?.t_temasid === tema.t_temasid">
+            <input [(ngModel)]="editando!.t_temasdescripcion" />
+
+          </td>
+          <td>
+            <button *ngIf="editando?.t_temasid !== tema.t_temasid"
+              (click)="editarTema(tema)">Editar</button>
+            <button *ngIf="editando?.t_temasid === tema.t_temasid"
+              (click)="guardarEdicion()">Guardar</button>
+            <button *ngIf="editando?.t_temasid === tema.t_temasid"
+              (click)="cancelarEdicion()">Cancelar</button>
+            <button (click)="eliminarTema(tema.t_temasid!)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

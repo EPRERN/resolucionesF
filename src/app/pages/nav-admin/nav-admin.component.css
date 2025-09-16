@@ -3,12 +3,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #fce4ec, #e3f2fd, #e8f5e9);
+  background: rgba(255, 255, 255, 0.15); /* vidrio */
   backdrop-filter: blur(12px);
   border-radius: 16px;
   padding: 12px 24px;
   margin: 15px;
-  color: #3b82f6;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   animation: fadeInDown 0.8s ease;
@@ -18,7 +17,7 @@
 .toolbar-title {
   font-size: 1.6rem;
   font-weight: bold;
-  color: #8f8e8e;
+  color: #ffffff;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   animation: textPulse 2s infinite;
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 
 export interface TtemasLotus {
@@ -14,8 +15,8 @@ export interface TtemasLotus {
   providedIn: 'root'
 })
 export class TemaslotusService {
-
-  private apiUrl = 'http://localhost:8080/api/t_temaslotuss'; // Ajusta el puerto si tu backend usa otro
+  
+  private apiUrl: string = environment.apiUrl + '/api/t_temaslotuss';
 
   constructor(private http: HttpClient) { }
 

@@ -138,7 +138,7 @@ export class ResolucionesComponent implements OnInit {
     constructor(private resolucionesService: ResolucionesService, private temasService: TemasService) { }
 
     ngOnInit(): void {
-        this.cargarResoluciones();
+        // this.cargarResoluciones();
         this.temasService.getAll().subscribe(data => {
             this.temas = data;
         });
@@ -169,7 +169,7 @@ export class ResolucionesComponent implements OnInit {
 
     // Paginación
     page: number = 1;
-    pageSize: number = 5;
+    pageSize: number = 10;
 
     get resolucionesPaginadas(): T_resoluciones[] {
         const data = this.resolucionesFiltradas;
@@ -182,6 +182,8 @@ export class ResolucionesComponent implements OnInit {
         const data = this.resolucionesFiltradas;
         return Math.ceil(data.length / this.pageSize) || 1; // devolvemos al menos 1 para que no rompa el input de página
     }
+
+
 
 
     cargarResoluciones(): void {
@@ -267,6 +269,7 @@ export class ResolucionesComponent implements OnInit {
         this.nuevaResolucion.t_resolucionestitulo =
             `Res. ${this.nuevaResolucion.t_resolucionesnro} ${this.nuevaResolucion.t_resolucionesexpte} ${this.nuevaResolucion.t_resolucionesexptecaratula}`;
     }
+
 
     formatDateToBackend(date: Date): string {
         if (!date) return '';
