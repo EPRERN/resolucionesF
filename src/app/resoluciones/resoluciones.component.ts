@@ -102,8 +102,12 @@ export class ResolucionesComponent implements OnInit {
                 title: "Guardado",
                 text: "La resolución se ha guardado correctamente",
                 confirmButtonText: "Aceptar"
-            }).then(() => window.location.reload());
+            }).then(() => {
+                this.cargarResoluciones(); // recarga la lista
+                this.page = this.totalPages; // te manda a la última página
+            });
         });
+        
     }
 
 
@@ -182,9 +186,6 @@ export class ResolucionesComponent implements OnInit {
 
 
 
-
-
-
     cargarResoluciones(): void {
         this.resolucionesService.getAll().subscribe(data => {
             this.resoluciones = data;
@@ -193,8 +194,7 @@ export class ResolucionesComponent implements OnInit {
         });
     }
 
-
-    onFileSelected(event: any): void {
+  onFileSelected(event: any): void {
         const file: File = event.target.files[0];
         if (!file) return;
 
@@ -269,11 +269,6 @@ export class ResolucionesComponent implements OnInit {
         this.nuevaResolucion.t_resolucionestitulo =
             `Res. ${this.nuevaResolucion.t_resolucionesnro} ${this.nuevaResolucion.t_resolucionesexpte} ${this.nuevaResolucion.t_resolucionesexptecaratula}`;
     }
-
-
-
-
-
 
 
     formatDateToBackend(date: Date): string {

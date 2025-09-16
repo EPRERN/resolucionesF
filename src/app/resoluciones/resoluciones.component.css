@@ -193,6 +193,7 @@ input[type="file"] {
 
 /* ===== TABLA ===== */
 table {
+
   width: 80%;
   border-collapse: separate;
   margin-left: 100px;
@@ -202,6 +203,7 @@ table {
   background-color: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   font-size: 0.95rem;
+
 }
 
 /* Aplica fondo y borde solo a los th individuales */
@@ -241,11 +243,12 @@ tbody td {
 tbody tr:nth-child(even) {
   background: #f7fafc;
 }
-
 tbody tr:hover {
+
   background: #efefef;
   transition: background 0.2s, color 0.2s;
   font-style: oblique;
+
 }
 
 
@@ -331,6 +334,7 @@ table {
 /* ===== PAGINADOR ESTILIZADO ===== */
 .paginador {
 
+
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -341,6 +345,7 @@ table {
   background-color: #f7fafc;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
 }
 
 /* Botones del paginador */

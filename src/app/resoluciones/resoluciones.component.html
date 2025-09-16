@@ -1,6 +1,7 @@
 <app-nav></app-nav>
 <br><br><br>
 <div class="container">
+
     <div class="header-container">
         <h2>Nueva Resolución</h2>
         
@@ -17,6 +18,7 @@
         </div>
         
     </div> 
+
     <form (ngSubmit)="agregarResolucion()">
         
         <!-- TEMA -->
@@ -40,6 +42,7 @@
         <div class="form-group">
             <label for="pdfFile">Archivo PDF (se guarda en BDD):</label>
             <input id="pdfFile" type="file" accept="application/pdf" (change)="onPdfFileSelected($event)">
+
         </div><br style="margin-top: -15px;">
         <div class="button-container">
             <button type="submit">Cargar Resolución</button>
@@ -51,12 +54,17 @@
         <div class="form-group">
             <label for="nro">Nro Resolución:</label>
             <input id="nro" type="text" [(ngModel)]="nuevaResolucion.t_resolucionesnro" name="nro" required placeholder="Ej: 123 25">
+
+        </div>
+
         </div>
         
         <!-- EXPEDIENTE -->
         <div class="form-group">
             <label for="expte">Expediente:</label>
+
             <input id="expte" type="text" [(ngModel)]="nuevaResolucion.t_resolucionesexpte" name="expte" placeholder="Ej: 456">
+
         </div>
         
         <!-- CARÁTULA -->
@@ -84,8 +92,7 @@
         </div>
         
         
-        
-        
+
         
     </form>
 </div>
