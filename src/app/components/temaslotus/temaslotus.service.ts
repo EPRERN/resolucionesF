@@ -2,12 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
+import { TtemasLotus } from './temaslotus.model';
 
 
-export interface TtemasLotus {
-  t_temaslotusid?: number;
-  t_temaslotusdescripcion: string;
-}
 
 
 

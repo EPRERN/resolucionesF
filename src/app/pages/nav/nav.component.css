@@ -1,5 +1,6 @@
 /* ====== Toolbar general ====== */
 .toolbar {
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,7 +12,7 @@
   color: #3b82f6;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  animation: fadeInDown 0.8s ease;
+  animation: fadeInDown 2s ease;
 }
 
 /* ====== Título centrado ====== */

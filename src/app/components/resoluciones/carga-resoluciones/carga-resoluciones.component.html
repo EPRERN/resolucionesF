@@ -1,12 +1,12 @@
 <app-nav></app-nav>
 <br><br>
-<!-- Loader -->
+
 <div *ngIf="loading" class="textWrapper">
     <p class="text">Cargando la tabla, espere unos minutos por favor...</p>
     <div class="invertbox"></div>
 </div>
 
-<!-- Tabla -->
+
 <div *ngIf="!loading">
     <table>
         <thead>
@@ -26,7 +26,7 @@
                 <td>{{ r.t_resolucionestitulo }}</td>
                 <td>{{ r.t_resolucionesexpte }}</td>
                 <td>{{ r.t_resolucionesexptecaratula }}</td>
-                <td>{{ r.t_resolucionesdate | date }}</td>
+                <td>{{ r.t_resolucionesdate | date:'dd/MM/yy' }}</td>
                 <td>{{ r.distribuidoraNombre }}</td>
                 <td>
                     <button (click)="eliminarResolucion(r.t_resolucionesid!)">Eliminar</button>
@@ -49,6 +49,8 @@
             <input type="text" placeholder="Filtrar por Nro" [(ngModel)]="filtroNro"
                 (input)="aplicarFiltro()">&nbsp;&nbsp;
             <input type="text" placeholder="Filtrar por Expte" [(ngModel)]="filtroExpte" (input)="aplicarFiltro()">
+        
+              <input type="date" [(ngModel)]="filtroFecha" (change)="aplicarFiltro()">
         </div>
     </div>
 </div>

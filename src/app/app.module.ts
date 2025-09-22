@@ -4,20 +4,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DistribuidorasComponent } from './distribuidoras/distribuidoras.component';
-import { ResolucionesComponent } from './resoluciones/resoluciones.component';
 
-import { TemasComponent } from './temas/temas.component';
-import { TemaslotusComponent } from './temaslotus/temaslotus.component';
-import { DistribuidorasService } from './distribuidoras/distribuidoras.service';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
-import { ResolucionesyearComponent } from './resolucionesyear/resolucionesyear.component';
-import { PdfPreviewComponent } from './resoluciones/pdf-preview/pdf-preview.component';
+
+
 import { LoginComponent } from './auth/login/login.component';
 import { DashboardCargadorComponent } from './pages/dashboard-cargador/dashboard-cargador.component';
 import { NavComponent } from './pages/nav/nav.component';
-import { CargaResolucionesComponent } from './resoluciones/carga-resoluciones/carga-resoluciones.component';
+
 import { NavAdminComponent } from './pages/nav-admin/nav-admin.component';
+import { DistribuidorasComponent } from './components/distribuidoras/distribuidoras.component';
+import { CargaResolucionesComponent } from './components/resoluciones/carga-resoluciones/carga-resoluciones.component';
+import { PdfPreviewComponent } from './components/resoluciones/pdf-preview/pdf-preview.component';
+import { ResolucionesComponent } from './components/resoluciones/resoluciones.component';
+import { ResolucionesyearComponent } from './components/resolucionesyear/resolucionesyear.component';
+import { TemasComponent } from './components/temas/temas.component';
+import { TemaslotusComponent } from './components/temaslotus/temaslotus.component';
 
 
 @NgModule({

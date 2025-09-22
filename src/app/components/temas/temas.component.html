@@ -8,6 +8,15 @@
   <!-- Formulario para agregar nueva -->
   <div class="form-agregar">
     <input [(ngModel)]="nuevoTema.t_temasdescripcion" placeholder="Nombre del tema" />
+
+    <select [(ngModel)]="nuevoTema.temasLotus.t_temaslotusid">
+      <option *ngFor="let lotus of temasLotus" [value]="lotus.t_temaslotusid">
+        {{ lotus.t_temaslotusdescripcion }}
+      </option>
+    </select>
+
+
+
     <button (click)="agregarTema()">Agregar</button>
   </div>
 
@@ -34,12 +43,9 @@
 
           </td>
           <td>
-            <button *ngIf="editando?.t_temasid !== tema.t_temasid"
-              (click)="editarTema(tema)">Editar</button>
-            <button *ngIf="editando?.t_temasid === tema.t_temasid"
-              (click)="guardarEdicion()">Guardar</button>
-            <button *ngIf="editando?.t_temasid === tema.t_temasid"
-              (click)="cancelarEdicion()">Cancelar</button>
+            <button *ngIf="editando?.t_temasid !== tema.t_temasid" (click)="editarTema(tema)">Editar</button>
+            <button *ngIf="editando?.t_temasid === tema.t_temasid" (click)="guardarEdicion()">Guardar</button>
+            <button *ngIf="editando?.t_temasid === tema.t_temasid" (click)="cancelarEdicion()">Cancelar</button>
             <button (click)="eliminarTema(tema.t_temasid!)">Eliminar</button>
           </td>
         </tr>

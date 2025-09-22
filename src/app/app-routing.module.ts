@@ -2,15 +2,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
-import { DistribuidorasComponent } from './distribuidoras/distribuidoras.component';
-import { ResolucionesComponent } from './resoluciones/resoluciones.component';
-import { TemasComponent } from './temas/temas.component';
-import { TemaslotusComponent } from './temaslotus/temaslotus.component';
+
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { RoleGuard } from './auth/role.guard';
 import { DashboardCargadorComponent } from './pages/dashboard-cargador/dashboard-cargador.component';
-import { ResolucionesyearComponent } from './resolucionesyear/resolucionesyear.component';
-import { CargaResolucionesComponent } from './resoluciones/carga-resoluciones/carga-resoluciones.component';
+import { DistribuidorasComponent } from './components/distribuidoras/distribuidoras.component';
+import { CargaResolucionesComponent } from './components/resoluciones/carga-resoluciones/carga-resoluciones.component';
+import { ResolucionesComponent } from './components/resoluciones/resoluciones.component';
+import { ResolucionesyearComponent } from './components/resolucionesyear/resolucionesyear.component';
+import { TemasComponent } from './components/temas/temas.component';
+import { TemaslotusComponent } from './components/temaslotus/temaslotus.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },

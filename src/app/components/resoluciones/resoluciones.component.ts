@@ -122,7 +122,7 @@ export class ResolucionesComponent implements OnInit {
         tema: {
             t_temasid: 1,
             t_temasdescripcion: '',
-            t_temaslotusid: 0
+            temasLotus: { t_temaslotusid: 0 }
         },
         t_resolucionesexpte: '',
         t_resolucionestitulo: '',

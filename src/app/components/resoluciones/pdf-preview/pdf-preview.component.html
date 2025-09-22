@@ -1,5 +1,5 @@
-<div class="overlay" *ngIf="safeUrl">
-  <div class="modal">
+<div class="overlay" *ngIf="safeUrl" (click)="cerrar()">
+  <div class="modal" (click)="$event.stopPropagation()">
     <button class="close-btn" (click)="cerrar()">X</button>
     <iframe
       [src]="safeUrl"

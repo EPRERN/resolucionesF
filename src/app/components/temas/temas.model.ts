@@ -1,5 +1,5 @@
 export interface T_temas {
   t_temasid?: number;       
   t_temasdescripcion: string;
-  t_temaslotusid?: number;  
+  temasLotus: { t_temaslotusid: number };  
 }

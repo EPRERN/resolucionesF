@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { T_resoluciones } from '../resoluciones.model';
 import { ResolucionesService } from '../resoluciones.service';
-import { T_temas } from 'src/app/temas/temas.model';
-import { TemasService } from 'src/app/temas/temas.service';
+
 import Swal from 'sweetalert2';
 import { ResolucionDTO } from './resolucionesDTO.model';
+import { T_temas } from '../../temas/temas.model';
+import { TemasService } from '../../temas/temas.service';
 
 @Component({
   selector: 'app-carga-resoluciones',
@@ -13,14 +14,19 @@ import { ResolucionDTO } from './resolucionesDTO.model';
 })
 export class CargaResolucionesComponent {
 
-
+  filtroFecha: string = '';
+  
 
   temas: T_temas[] = [];
 
   nuevaResolucion: T_resoluciones = {
     t_resolucionesnro: '',
     distribuidora: { t_distribuidorasid: 1, t_distribuidorasnombre: '' },
-    tema: { t_temasid: 1, t_temasdescripcion: '', t_temaslotusid: 0 },
+    tema: {
+      t_temasid: 1,
+      t_temasdescripcion: '',
+      temasLotus: { t_temaslotusid: 0 }
+    },
     t_resolucionesexpte: '',
     t_resolucionestitulo: '',
     t_resolucionesexptecaratula: '',
@@ -123,7 +129,11 @@ export class CargaResolucionesComponent {
         t_resolucionesid: 0,
         t_resolucionesnro: '',
         distribuidora: { t_distribuidorasid: 1, t_distribuidorasnombre: '' },
-        tema: { t_temasid: 1, t_temasdescripcion: '', t_temaslotusid: 0 },
+        tema: {
+          t_temasid: 1,
+          t_temasdescripcion: '',
+          temasLotus: { t_temaslotusid: 0 }
+        },
         t_resolucionesexpte: '',
         t_resolucionestitulo: '',
         t_resolucionesexptecaratula: '',
@@ -165,11 +175,18 @@ export class CargaResolucionesComponent {
       const coincideNro = this.filtroNro
         ? r.t_resolucionesnro.toLowerCase().includes(this.filtroNro.toLowerCase())
         : true;
+
       const coincideExpte = this.filtroExpte
         ? r.t_resolucionesexpte.toLowerCase().includes(this.filtroExpte.toLowerCase())
         : true;
-      return coincideNro && coincideExpte;
+
+      const coincideFecha = this.filtroFecha
+        ? new Date(r.t_resolucionesdate).toISOString().slice(0, 10) === this.filtroFecha
+        : true;
+
+      return coincideNro && coincideExpte && coincideFecha;
     });
+
     this.page = 1; // resetear paginación al filtrar
   }
 

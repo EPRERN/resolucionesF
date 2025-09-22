@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TemaslotusService, TtemasLotus } from './temaslotus.service';
+import { TemaslotusService } from './temaslotus.service';
+import { TtemasLotus } from './temaslotus.model';
 
 @Component({
   selector: 'app-temaslotus',

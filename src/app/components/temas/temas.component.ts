@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { T_temas } from './temas.model';
 import { TemasService } from './temas.service';
+import { TtemasLotus } from '../temaslotus/temaslotus.model';
+import { TemaslotusService } from '../temaslotus/temaslotus.service';
 
 @Component({
   selector: 'app-temas',
@@ -10,14 +12,20 @@ import { TemasService } from './temas.service';
 export class TemasComponent implements OnInit {
 
   temas: T_temas[] = [];
-  nuevoTema: T_temas = { t_temasdescripcion: '' };
-  editando: T_temas | null = null
+  temasLotus: TtemasLotus[] = [];
+  nuevoTema: T_temas = {
+    t_temasdescripcion: '',
+    temasLotus: { t_temaslotusid: 0 }
+  };
+  editando: T_temas | null = null;
 
-  constructor(private temasService: TemasService) { }
+
+  constructor(private temasService: TemasService, private temasLotusService: TemaslotusService) { }
 
 
   ngOnInit() {
     this.cargarTemas();
+    this.cargarTemasLotus();
   }
   cargarTemas() {
     this.temasService.getAll().subscribe(data => {
@@ -26,14 +34,21 @@ export class TemasComponent implements OnInit {
     })
   }
 
+  cargarTemasLotus() {
+    this.temasLotusService.getAll().subscribe(data => this.temasLotus = data);
+  }
+
 
   agregarTema(): void {
-    if (!this.nuevoTema.t_temasdescripcion.trim()) return;
+    if (!this.nuevoTema.t_temasdescripcion.trim() || !this.nuevoTema.temasLotus) return;
 
     this.temasService.create(this.nuevoTema).subscribe(() => {
       this.cargarTemas();
-      this.nuevoTema = { t_temasdescripcion: '' };
-    })
+      this.nuevoTema = {
+        t_temasdescripcion: '',
+        temasLotus: { t_temaslotusid: 0 }
+      };
+    });
   }
 
 
