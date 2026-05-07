@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment.prod';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  private apiUrl: string = environment.apiUrl + '/api/auth/login';
+  private apiUrl: string = environment.apiUrl + '/api/auth/login.php';
 
 
 

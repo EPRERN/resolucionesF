@@ -29,14 +29,14 @@
                 <td>{{ r.t_resolucionesdate | date:'dd/MM/yy' }}</td>
                 <td>{{ r.distribuidoraNombre }}</td>
                 <td>
-                    <button (click)="eliminarResolucion(r.t_resolucionesid!)">Eliminar</button>
-                    <button (click)="descargarPDF(r.t_resolucionesid!)">Descargar PDF</button>
-                    <button type="button" (click)="abrirPreview(r.t_resolucionesid!)">Vista Previa</button>
+                    <button (click)="eliminarResolucion(r.t_resolucionesid)">Eliminar</button>
+                    <button (click)="descargarPDF(r.t_resolucionesid)">Descargar PDF</button>
+                    <button type="button" (click)="abrirPreview(r.t_resolucionesid)">Vista Previa</button>
                 </td>
             </tr>
         </tbody>
     </table>
-
+    
     <!-- Paginador -->
     <div class="paginador">
         <button (click)="page = page - 1" [disabled]="page === 1">Anterior</button>
@@ -44,13 +44,13 @@
         <span>Página</span>
         <input type="number" [(ngModel)]="page" name="pagina" [min]="1" [max]="totalPages" (change)="irAPagina()">
         <span>de&nbsp;{{ totalPages }}</span>
-
+        
         <div class="filtros">
             <input type="text" placeholder="Filtrar por Nro" [(ngModel)]="filtroNro"
-                (input)="aplicarFiltro()">&nbsp;&nbsp;
+            (input)="aplicarFiltro()">&nbsp;&nbsp;
             <input type="text" placeholder="Filtrar por Expte" [(ngModel)]="filtroExpte" (input)="aplicarFiltro()">
-        
-              <input type="date" [(ngModel)]="filtroFecha" (change)="aplicarFiltro()">
+            
+            <input type="date" [(ngModel)]="filtroFecha" (change)="aplicarFiltro()">
         </div>
     </div>
 </div>

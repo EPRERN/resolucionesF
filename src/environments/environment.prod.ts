@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://eprern.gov.ar:8081'
+  apiUrl: 'https://www.eprern.gov.ar/Resoluciones2026'
 };
